@@ -55,8 +55,8 @@ public class Robot extends TimedRobot {
     //outputs and inputs
     stick = new Joystick(0);
     
-     forwardlimit = new DigitalInput(4);
-     reverselimit = new DigitalInput(5);
+    forwardlimit = new DigitalInput(4);
+    reverselimit = new DigitalInput(5);
 
   }
 
