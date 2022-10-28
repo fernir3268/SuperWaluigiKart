@@ -4,6 +4,7 @@
 // its done ayy
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public static MotorControllerGroup driveleft;
   public static DifferentialDrive drive;
   public static Joystick stick;
+  public static DigitalInput forwardlimit, reverselimit;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -40,6 +42,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+
+    // motors
     driveleftFront = new Talon(0);
     driveleftBack = new Talon(1);
     driverightFront = new Talon(2);
@@ -48,7 +52,11 @@ public class Robot extends TimedRobot {
     driveright = new MotorControllerGroup(driverightFront, driverightBack);
     drive = new DifferentialDrive(driveleft, driveright);
 
+    //outputs and inputs
     stick = new Joystick(0);
+    
+     forwardlimit = new DigitalInput(4);
+     reverselimit = new DigitalInput(5);
 
   }
 
@@ -100,11 +108,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    while (isEnabled()) {
-      drive.arcadeDrive(stick.getY(), stick.getX());
+    double output = stick.getY();
+    if(forwardlimit.get()){
+      output = Math.min(output, 0);
+    } else if(reverselimit.get()){
+      output = Math.max(output, 0);
     }
-    drive.stopMotor();
-
+      drive.arcadeDrive(output, stick.getX());
   }
 
   /** This function is called periodically during operator control. */
