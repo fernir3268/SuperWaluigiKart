@@ -1,9 +1,10 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+// its done ayy
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -17,6 +18,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static Talon driveleftFront;
+  public static Talon driveleftBack;
+  public static Talon driverightFront;
+  public static Talon driverightBack;
+  public static MotorControllerGroup driveright;
+  public static MotorControllerGroup driveleft;
+  public static DifferentialDrive drive;
+  public static Joystick stick;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -26,13 +35,15 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    Talon driveleftFront = new Talon(0);
-    Talon driveleftBack = new Talon(1);
-    Talon driverightFront = new Talon(2);
-    Talon driverightBack = new Talon(3);
-    MotorControllerGroup driveleft = new MotorControllerGroup(driveleftFront, driveleftBack);
-    MotorControllerGroup driveright = new MotorControllerGroup(driverightFront, driverightBack);
-    DifferentialDrive drive = new DifferentialDrive(driveleft, driveright);
+    driveleftFront = new Talon(0);
+    driveleftBack = new Talon(1);
+    driverightFront = new Talon(2);
+    driverightBack = new Talon(3);
+    driveleft = new MotorControllerGroup(driveleftFront, driveleftBack);
+    driveright = new MotorControllerGroup(driverightFront, driverightBack);
+    drive = new DifferentialDrive(driveleft, driveright);
+
+    stick = new Joystick(0);
 
 
   }
@@ -72,7 +83,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
+    drive.arcadeDrive(stick.getY(), stick.getX());
+    
   }
 
   /** This function is called periodically during operator control. */
