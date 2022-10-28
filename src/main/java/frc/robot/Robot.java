@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -28,6 +31,15 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    Talon driveleftFront = new Talon(0);
+    Talon driveleftBack = new Talon(1);
+    Talon driverightFront = new Talon(2);
+    Talon driverightBack = new Talon(3);
+    MotorControllerGroup driveleft = new MotorControllerGroup(driveleftFront, driveleftBack);
+    MotorControllerGroup driveright = new MotorControllerGroup(driverightFront, driverightBack);
+    DifferentialDrive drive = new DifferentialDrive(driveleft, driveright);
+
+
   }
 
   /**
