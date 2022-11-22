@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     double output = stick.getY();
       drive.arcadeDrive(output, stick.getX());
-
+}
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
