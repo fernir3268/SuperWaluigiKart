@@ -109,13 +109,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     double output = stick.getY();
-    if(forwardlimit.get()){
-      output = Math.min(output, 0);
-    } else if(reverselimit.get()){
-      output = Math.max(output, 0);
-    }
       drive.arcadeDrive(output, stick.getX());
-  }
 
   /** This function is called periodically during operator control. */
   @Override
