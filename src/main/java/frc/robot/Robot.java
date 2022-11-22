@@ -108,8 +108,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    double output = stick.getY();
-      drive.arcadeDrive(output, stick.getX());
+      drive.arcadeDrive(stick.getY(), stick.getX());
 }
   /** This function is called periodically during operator control. */
   @Override
