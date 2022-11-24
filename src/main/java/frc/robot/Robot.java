@@ -4,9 +4,12 @@
 // it shall work with 100% efficiency 70% of the time
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
@@ -31,6 +34,8 @@ public class Robot extends TimedRobot {
   public static DifferentialDrive drive;
   public static Joystick stick;
   public static DigitalInput forwardlimit, reverselimit;
+  public static PowerDistribution PD;
+  public static double basepower;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -56,6 +61,12 @@ public class Robot extends TimedRobot {
     stick = new Joystick(0);
     //inversion
     driveleft.setInverted(true);
+
+    //camera
+    CameraServer.startAutomaticCapture();
+
+    //power
+    PD = new PowerDistribution(0, ModuleType.kCTRE);
 
   }
 
@@ -107,13 +118,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    basepower = PD.getVoltage();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-
+    if(PD.getVoltage() < 0.75 * basepower){
+      //brownout prevention
+      drive.arcadeDrive(0.25* stick.getY(), stick.getX());
+    }
+    else{
     drive.arcadeDrive(stick.getY(), stick.getX());
+    }
   }
 
   @Override
