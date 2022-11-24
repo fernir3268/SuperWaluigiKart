@@ -52,11 +52,10 @@ public class Robot extends TimedRobot {
     driveright = new MotorControllerGroup(driverightFront, driverightBack);
     drive = new DifferentialDrive(driveleft, driveright);
 
-    //outputs and inputs
+    // outputs and inputs
     stick = new Joystick(0);
-    
-    forwardlimit = new DigitalInput(4);
-    reverselimit = new DigitalInput(5);
+    //inversion
+    driveleft.setInverted(true);
 
   }
 
@@ -108,7 +107,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-}
+  }
+
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
