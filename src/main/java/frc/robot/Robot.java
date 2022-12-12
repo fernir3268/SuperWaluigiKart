@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
     // outputs and inputs
     stick = new Joystick(0);
     //inversion
-    driveleft.setInverted(true);
+    //driveleft.setInverted(true);
 
     //camera
     CameraServer.startAutomaticCapture();
